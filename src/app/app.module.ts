@@ -12,6 +12,7 @@ import { SearchComponent } from './component/search/search.component';
 import { ProductDetailsComponent } from './component/product-details/product-details.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CardStatusComponent } from './component/card-status/card-status.component';
 
 const routes: Routes = [
   { path: 'product/:id', component: ProductDetailsComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
     ProductListComponent,
     ProductCategoryMenuComponent,
     SearchComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CardStatusComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
