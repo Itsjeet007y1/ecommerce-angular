@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { ProductListComponent } from './component/product-list/product-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from './services/product.service';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { ProductCategoryMenuComponent } from './component/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './component/search/search.component';
 import { ProductDetailsComponent } from './component/product-details/product-details.component';
@@ -20,6 +20,7 @@ import { LoginComponent } from './component/login/login.component';
 import { LoginStatusComponent } from './component/login-status/login-status.component';
 
 import {
+  OktaAuthGuard,
   OktaAuthModule,
   OktaCallbackComponent,
   OKTA_CONFIG
@@ -27,12 +28,24 @@ import {
 
 import { OktaAuth } from '@okta/okta-auth-js';
 import myAppConfig from './config/my-app-config';
+import { MembersPageComponent } from './component/members-page/members-page.component';
 
 const octaConfig = myAppConfig.oidc;
 
 const oktaAuth = new OktaAuth(octaConfig);
 
+function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector) {
+  // use injector to access any service available within your application
+  const router = injector.get(Router);
+
+  // Redirect the user to your custom login page
+  router.navigate(['/login'])
+}
+
 const routes: Routes = [
+  { path: 'members', component: MembersPageComponent, canActivate: [OktaAuthGuard], 
+                      data: {onAuthRequired: sendToLoginPage}},
+
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
 
@@ -59,6 +72,7 @@ const routes: Routes = [
     CheckoutComponent,
     LoginComponent,
     LoginStatusComponent,
+    MembersPageComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
