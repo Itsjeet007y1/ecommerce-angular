@@ -35,8 +35,6 @@ export class CartService {
   }
 
   addToCart(theCartItem: CartItem) {
-
-    console.log("add to cart method...................."+ theCartItem.id);
     
     // check if we have already item in our cart
     let alreadyExistInCart: boolean = false;
