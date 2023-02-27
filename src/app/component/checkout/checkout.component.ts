@@ -214,6 +214,7 @@ export class CheckoutComponent implements OnInit {
     // Compute payment info
     this.paymentInfo.amount = Math.round(this.totalPrice * 100);
     this.paymentInfo.currency = "INR";
+    this.paymentInfo.receiptEmail = purchase.customer.email;
 
     // Old code: call RestAPI via checkoutService
 
